@@ -1,0 +1,11 @@
+.env
+*.log
+coverage/
+generated-certs/
+secrets/
+snapshots/
+*.snap
+/service-token
+/openbao-init-encrypted.json
+node_modules/
+.DS_Store

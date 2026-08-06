@@ -1,0 +1,45 @@
+[Unit]
+Description=OpenBao KMS for KalqiX
+Documentation=https://openbao.org/docs/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+User=openbao
+Group=openbao
+ExecStart=/usr/bin/bao server -config=/etc/openbao/openbao.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=30s
+KillSignal=SIGINT
+LimitCORE=0
+LimitMEMLOCK=infinity
+MemorySwapMax=0
+UMask=0027
+
+AmbientCapabilities=CAP_IPC_LOCK
+CapabilityBoundingSet=CAP_IPC_LOCK
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=strict
+ReadWritePaths=/var/lib/openbao /var/log/openbao
+RemoveIPC=true
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

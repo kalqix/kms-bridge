@@ -1,0 +1,15 @@
+{
+  "name": "kalqix-kms-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "check": "node --check src/config.mjs && node --check src/openbao-client.mjs && node --check src/server.mjs && node --check src/main.mjs",
+    "test": "node --test",
+    "verify": "npm run check && npm test",
+    "start": "node src/main.mjs"
+  }
+}

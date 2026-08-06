@@ -1,0 +1,45 @@
+[Unit]
+Description=KalqiX OpenBao KMS bridge
+Wants=network-online.target openbao.service
+After=network-online.target openbao.service
+
+[Service]
+Type=simple
+User=kalqix-kms-bridge
+Group=kalqix-kms-bridge
+WorkingDirectory=/opt/kalqix-kms-bridge/current
+EnvironmentFile=/etc/kalqix-kms/bridge.env
+Environment=NODE_EXTRA_CA_CERTS=/etc/kalqix-kms/tls/ca.crt
+LoadCredential=service-token:/etc/kalqix-kms/credentials/service-token
+LoadCredential=openbao-role-id:/etc/kalqix-kms/credentials/openbao-role-id
+LoadCredential=openbao-secret-id:/etc/kalqix-kms/credentials/openbao-secret-id
+ExecStart=/usr/local/bin/node /opt/kalqix-kms-bridge/current/src/main.mjs
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=15s
+LimitCORE=0
+UMask=0077
+
+CapabilityBoundingSet=
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=strict
+ReadOnlyPaths=/etc/kalqix-kms
+RemoveIPC=true
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
