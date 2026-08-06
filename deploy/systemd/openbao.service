@@ -15,12 +15,10 @@ RestartSec=5s
 TimeoutStopSec=30s
 KillSignal=SIGINT
 LimitCORE=0
-LimitMEMLOCK=infinity
 MemorySwapMax=0
 UMask=0027
 
-AmbientCapabilities=CAP_IPC_LOCK
-CapabilityBoundingSet=CAP_IPC_LOCK
+CapabilityBoundingSet=
 NoNewPrivileges=true
 PrivateDevices=true
 PrivateTmp=true

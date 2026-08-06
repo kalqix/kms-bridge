@@ -1,7 +1,6 @@
 # Replace __KMS_PRIVATE_IP__ before installation. OpenBao's client API remains
 # loopback-only; the bridge is the sole network-facing KMS contract.
 ui                  = false
-disable_mlock       = false
 log_level           = "info"
 log_format          = "json"
 api_addr            = "https://127.0.0.1:8200"
@@ -13,6 +12,17 @@ raw_storage_endpoint = false
 storage "raft" {
   path    = "/var/lib/openbao/raft"
   node_id = "kalqix-kms-fra1-1"
+}
+
+# Audit devices are managed by the server configuration in OpenBao 2.4+.
+# API-based audit creation is intentionally left disabled.
+audit "file" "kalqix-file" {
+  description = "Append-only KalqiX KMS audit log"
+  options = {
+    file_path = "/var/log/openbao/audit.jsonl"
+    format    = "json"
+    log_raw   = "false"
+  }
 }
 
 listener "tcp" {

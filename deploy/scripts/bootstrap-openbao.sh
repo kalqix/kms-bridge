@@ -23,7 +23,6 @@ bao_root() {
   BAO_TOKEN="${root_token}" bao "$@"
 }
 
-bao_root audit enable file file_path=/var/log/openbao/audit.jsonl
 bao_root secrets enable -path=kalqix-transit transit
 bao_root write kalqix-transit/config/keys disable_upsert=true
 bao_root policy write kalqix-kms-bridge /opt/kalqix-kms-bridge/current/deploy/openbao/bridge-policy.hcl

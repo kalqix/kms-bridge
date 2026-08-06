@@ -13,11 +13,21 @@ path "sys/storage/raft/snapshot-force" {
 }
 
 path "sys/audit" {
-  capabilities = ["read", "list"]
+  capabilities = ["read", "list", "sudo"]
 }
 
 path "sys/audit-hash/*" {
   capabilities = ["update"]
+}
+
+# OpenBao 2.6 root-token generation is authenticated. These permissions only
+# start and advance the workflow; a 3-of-5 Shamir quorum is still required.
+path "sys/generate-root-token/attempt" {
+  capabilities = ["read", "update", "delete", "sudo"]
+}
+
+path "sys/generate-root-token/update" {
+  capabilities = ["update", "sudo"]
 }
 
 path "kalqix-transit/keys" {

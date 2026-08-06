@@ -175,7 +175,8 @@ sudo --preserve-env=BAO_ADDR,BAO_CACERT \
 The script prompts without echo for the initial root token and a new 32+
 character `kms-admin` password. It then:
 
-- enables the append-only audit log;
+- runs with the declarative append-only audit device configured in
+  `/etc/openbao/openbao.hcl`;
 - enables Transit at `kalqix-transit/`;
 - disables encryption-path key upsert;
 - installs least-privilege bridge and operator policies;
@@ -183,6 +184,10 @@ character `kms-admin` password. It then:
 - creates the restricted `kms-admin` operator login;
 - writes the bridge AppRole credentials as root-only files;
 - revokes the initial root token.
+
+The `kms-admin` policy can initiate and cancel OpenBao 2.6's authenticated root
+token generation workflow, but cannot complete it without three Shamir shares.
+This preserves quorum recovery after the initial root token is revoked.
 
 Store the `kms-admin` password in an offline/operator password manager. Test the
 login before ending the maintenance session:
